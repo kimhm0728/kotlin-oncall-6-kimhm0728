@@ -4,8 +4,8 @@ import oncall.model.*
 
 class WorkSortAssignee {
 
-    private var weekDayWorkSortIdx = 0
-    private var holiDayWorkSortIdx = 0
+    private var weekdayWorkSortIdx = 0
+    private var holidayWorkSortIdx = 0
     private val workShiftStore = mutableListOf<WorkShiftInfo>()
 
     fun assign(
@@ -16,13 +16,13 @@ class WorkSortAssignee {
 
         onCallInfo.forEach { month, day, dayOfWeek ->
             if (DayClassifier.isHoliday(month, day, dayOfWeek)) {
-                val worker = getWorker(holiDayWorkSort, holiDayWorkSortIdx, day)
+                val worker = getWorker(holiDayWorkSort, holidayWorkSortIdx, day)
                 val workShiftInfo = WorkShiftInfo(month, day, dayOfWeek, worker)
                 applyHolidayWork(worker, day, workShiftInfo)
                 return@forEach
             }
 
-            val worker = getWorker(weekDayWorkSort, weekDayWorkSortIdx, day)
+            val worker = getWorker(weekDayWorkSort, weekdayWorkSortIdx, day)
             val workShiftInfo = WorkShiftInfo(month, day, dayOfWeek, worker)
             applyWeekdayWork(worker, day, workShiftInfo)
         }
@@ -35,18 +35,18 @@ class WorkSortAssignee {
         if (!WorkHistory.isWorkYesterday(worker, day)) {
             return worker
         }
-        workSort.sortChange(day)
-            return workSort[idx]
+        workSort.changeSort(day)
+        return workSort[idx]
     }
 
     private fun applyHolidayWork(worker: Worker, day: Int, workShiftInfo: WorkShiftInfo) {
         applyWork(worker, day, workShiftInfo)
-        holiDayWorkSortIdx++
+        holidayWorkSortIdx++
     }
 
     private fun applyWeekdayWork(worker: Worker, day: Int, workShiftInfo: WorkShiftInfo) {
         applyWork(worker, day, workShiftInfo)
-        weekDayWorkSortIdx++
+        weekdayWorkSortIdx++
     }
 
     private fun applyWork(worker: Worker, day: Int, workShiftInfo: WorkShiftInfo) {

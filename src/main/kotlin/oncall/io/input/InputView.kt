@@ -17,15 +17,15 @@ class InputView(
         return converter.convertMonthAndStartDay(input)
     }
 
-    fun readWorkSortByWeekDayAndHoliDay() =
-        readWorkSortByWeekDay() to readWorkSortByHoliDay()
+    fun readWorkSortByWeekdayAndHoliday() =
+        readWorkSortByWeekday() to readWorkSortByHoliday()
 
-    private fun readWorkSortByWeekDay(): WorkSort {
+    private fun readWorkSortByWeekday(): WorkSort {
         print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
         return readWorkSort()
     }
 
-    private fun readWorkSortByHoliDay(): WorkSort {
+    private fun readWorkSortByHoliday(): WorkSort {
         print("휴일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
         return readWorkSort()
     }

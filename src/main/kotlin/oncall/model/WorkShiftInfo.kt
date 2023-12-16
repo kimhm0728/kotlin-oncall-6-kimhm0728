@@ -19,5 +19,5 @@ class WorkShiftInfo(
     }
 
     private fun isWeekDayAndLegalHoliday() =
-        DayClassifier.isWeekDay(dayOfWeek) && DayClassifier.isLegalHoliDay(month, day)
+        DayClassifier.isWeekday(dayOfWeek) && DayClassifier.isLegalHoliday(month, day)
 }

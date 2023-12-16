@@ -26,7 +26,7 @@ class OnCallController(
     }
 
     private fun getWorkSortByWeekDayAndHoliDay() = retryWhileNoException {
-        inputView.readWorkSortByWeekDayAndHoliDay().apply {
+        inputView.readWorkSortByWeekdayAndHoliday().apply {
             first.validateWorkOnce(second)
         }
     }

@@ -18,7 +18,7 @@ object DayClassifier {
         legalHoliDayStore[Month.DEC] = 25
     }
 
-    fun isWeekDay(dayOfWeek: DayOfWeek): Boolean {
+    fun isWeekday(dayOfWeek: DayOfWeek): Boolean {
         if (dayOfWeek == DayOfWeek.MON) return true
         if (dayOfWeek == DayOfWeek.TUE) return true
         if (dayOfWeek == DayOfWeek.WED) return true
@@ -27,12 +27,12 @@ object DayClassifier {
         return false
     }
 
-    fun isLegalHoliDay(month: Month, day: Int): Boolean {
+    fun isLegalHoliday(month: Month, day: Int): Boolean {
         val legalDay = legalHoliDayStore[month] ?: return false
         if (legalDay == day) return true
         return false
     }
 
     fun isHoliday(month: Month, day: Int, dayOfWeek: DayOfWeek) =
-        isLegalHoliDay(month, day) || !isWeekDay(dayOfWeek)
+        isLegalHoliday(month, day) || !isWeekday(dayOfWeek)
 }
