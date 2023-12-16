@@ -1,5 +1,12 @@
 package oncall
 
+import oncall.io.input.InputView
+import oncall.io.output.OutputView
+
 fun main() {
-    TODO("프로그램 구현")
+    val inputView = InputView()
+    val outputView = OutputView()
+    val onCallController = OnCallController(inputView, outputView)
+
+    onCallController.run()
 }
