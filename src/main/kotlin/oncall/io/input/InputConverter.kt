@@ -3,6 +3,8 @@ package oncall.io.input
 import oncall.constants.Day
 import oncall.constants.Month
 import oncall.model.OnCallInfo
+import oncall.model.WorkSort
+import oncall.model.Worker
 import oncall.util.convertListWithComma
 
 class InputConverter {
@@ -14,4 +16,9 @@ class InputConverter {
 
         return OnCallInfo(month, day)
     }
+
+    fun convertWorkSort(input: String) =
+        input.convertListWithComma().map { Worker(it) }.run {
+            WorkSort(this)
+        }
 }

@@ -2,6 +2,7 @@ package oncall.io.input
 
 import camp.nextstep.edu.missionutils.Console
 import oncall.model.OnCallInfo
+import oncall.model.WorkSort
 
 class InputView(
     private val validator: InputValidator = InputValidator(),
@@ -14,5 +15,13 @@ class InputView(
 
         validator.validateMonthAndStartDay(input)
         return converter.convertMonthAndStartDay(input)
+    }
+
+    fun readWorkSortByWeekDay(): WorkSort {
+        print("평일 비상 근무 순번대로 사원 닉네임을 입력하세요> ")
+        val input = Console.readLine()
+
+        validator.validateWorkSort(input)
+        return converter.convertWorkSort(input)
     }
 }
