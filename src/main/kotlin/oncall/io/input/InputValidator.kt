@@ -17,7 +17,8 @@ class InputValidator {
 
     private fun String.validateEmpty() = require(this.isNotEmpty())
 
-    private fun List<String>.validateMonthAndStartDaySize() = require(size == 2)
+    private fun List<String>.validateMonthAndStartDaySize() =
+        require(size == MONTH_AND_START_DAY_SIZE)
 
     private fun String.validateMonth() = require(Month.entries.any { it.title == this })
 
@@ -42,6 +43,7 @@ class InputValidator {
         require(all { NICKNAME_REGEX.matches(it) })
 
     companion object {
+        private const val MONTH_AND_START_DAY_SIZE = 2
         private val WORKER_RANGE = 5..35
         private val NICKNAME_REGEX = "^[ㄱ-ㅎ가-힣]{1,5}$".toRegex()
     }
