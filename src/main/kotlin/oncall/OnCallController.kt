@@ -12,32 +12,21 @@ class OnCallController(
     private val outputView: OutputView
 ) {
 
-    private val onCallInfo: OnCallInfo
-    private val weekDayWorkSort: WorkSort
-    private val holiDayWorkSort: WorkSort
+    fun run() {
+        val onCallInfo = getOnCallInfo()
+        val (weekDayWorkSort, holiDayWorkSort) = getWorkSortByWeekDayAndHoliDay()
 
-    init {
-        onCallInfo = getOnCallInfo()
-        weekDayWorkSort = getWeekDayWorkSort()
-        holiDayWorkSort = getHoliDayWorkSort()
+        val workShiftStore =
+            WorkSortAssignee.assign(onCallInfo, weekDayWorkSort, holiDayWorkSort)
+
+        outputView.printWorkShiftList(workShiftStore)
     }
 
     private fun getOnCallInfo() = retryWhileNoException {
         inputView.readMonthAndStartDay()
     }
 
-    private fun getWeekDayWorkSort() = retryWhileNoException {
-        inputView.readWorkSortByWeekDay()
-    }
-
-    private fun getHoliDayWorkSort() = retryWhileNoException {
-        inputView.readWorkSortByHoliDay()
-    }
-
-    fun run() {
-        val workShiftStore =
-            WorkSortAssignee.assign(onCallInfo, weekDayWorkSort, holiDayWorkSort)
-
-        outputView.printWorkShiftList(workShiftStore)
+    private fun getWorkSortByWeekDayAndHoliDay() = retryWhileNoException {
+        inputView.readWorkSortByWeekDayAndHoliDay()
     }
 }
