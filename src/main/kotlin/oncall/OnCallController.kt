@@ -2,14 +2,13 @@ package oncall
 
 import oncall.io.input.InputView
 import oncall.io.output.OutputView
-import oncall.model.OnCallInfo
-import oncall.model.WorkSort
 import oncall.service.WorkSortAssignee
 import oncall.util.retryWhileNoException
 
 class OnCallController(
     private val inputView: InputView,
-    private val outputView: OutputView
+    private val outputView: OutputView,
+    private val workSortAssignee: WorkSortAssignee
 ) {
 
     fun run() {
@@ -17,7 +16,7 @@ class OnCallController(
         val (weekDayWorkSort, holiDayWorkSort) = getWorkSortByWeekDayAndHoliDay()
 
         val workShiftStore =
-            WorkSortAssignee.assign(onCallInfo, weekDayWorkSort, holiDayWorkSort)
+            workSortAssignee.assign(onCallInfo, weekDayWorkSort, holiDayWorkSort)
 
         outputView.printWorkShiftList(workShiftStore)
     }
