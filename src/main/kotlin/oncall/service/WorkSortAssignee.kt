@@ -7,6 +7,7 @@ class WorkSortAssignee {
     private var weekdayWorkSortIdx = 0
     private var holidayWorkSortIdx = 0
     private val workShiftStore = mutableListOf<WorkShiftInfo>()
+    private val workHistory = WorkHistory()
 
     fun assign(
         onCallInfo: OnCallInfo,
@@ -32,7 +33,7 @@ class WorkSortAssignee {
 
     private fun getWorker(workSort: WorkSort, idx: Int, day: Int): Worker {
         val worker = workSort[idx]
-        if (!WorkHistory.isWorkYesterday(worker, day)) {
+        if (!workHistory.isWorkYesterday(worker, day)) {
             return worker
         }
         workSort.changeSort(idx)
@@ -51,6 +52,6 @@ class WorkSortAssignee {
 
     private fun applyWork(worker: Worker, day: Int, workShiftInfo: WorkShiftInfo) {
         workShiftStore.add(workShiftInfo)
-        WorkHistory.work(worker, day)
+        workHistory.work(worker, day)
     }
 }

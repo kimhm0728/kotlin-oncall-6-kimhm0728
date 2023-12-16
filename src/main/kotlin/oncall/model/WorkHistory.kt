@@ -1,6 +1,6 @@
 package oncall.model
 
-object WorkHistory {
+class WorkHistory {
 
     private val history = mutableMapOf<String, MutableList<Int>>()
 
