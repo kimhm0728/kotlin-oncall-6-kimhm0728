@@ -1,11 +1,6 @@
 package oncall.service
 
-import oncall.constants.DayOfWeek
-import oncall.constants.Month
-import oncall.model.OnCallInfo
-import oncall.model.WorkShiftInfo
-import oncall.model.WorkShiftStore
-import oncall.model.WorkSort
+import oncall.model.*
 
 object WorkSortAssignee {
 
@@ -21,13 +16,35 @@ object WorkSortAssignee {
 
         onCallInfo.forEach { month, day, dayOfWeek ->
             if (DayClassifier.isHoliday(month, day, dayOfWeek)) {
-                val worker = holiDayWorkSort[holiDayWorkSortIdx++]
+                val worker = holiDayWorkSort[holiDayWorkSortIdx]
+                if (WorkHistory.isWorkYesterday(worker, day)) {
+                    holiDayWorkSort.sortChange(holiDayWorkSortIdx)
+                    val changeWorker = holiDayWorkSort[holiDayWorkSortIdx]
+                    workShiftStore.add(WorkShiftInfo(month, day, dayOfWeek, changeWorker))
+                    WorkHistory.work(changeWorker, day)
+                    holiDayWorkSortIdx++
+                    return@forEach
+                }
+
                 workShiftStore.add(WorkShiftInfo(month, day, dayOfWeek, worker))
+                WorkHistory.work(worker, day)
+                holiDayWorkSortIdx++
                 return@forEach
             }
 
-            val worker = weekDayWorkSort[weekDayWorkSortIdx++]
+            val worker = weekDayWorkSort[weekDayWorkSortIdx]
+            if (WorkHistory.isWorkYesterday(worker, day)) {
+                weekDayWorkSort.sortChange(weekDayWorkSortIdx)
+                val changeWorker = weekDayWorkSort[weekDayWorkSortIdx]
+                workShiftStore.add(WorkShiftInfo(month, day, dayOfWeek, changeWorker))
+                WorkHistory.work(changeWorker, day)
+                weekDayWorkSortIdx++
+                return@forEach
+            }
+
             workShiftStore.add(WorkShiftInfo(month, day, dayOfWeek, worker))
+            WorkHistory.work(worker, day)
+            weekDayWorkSortIdx++
         }
 
         return WorkShiftStore(workShiftStore)

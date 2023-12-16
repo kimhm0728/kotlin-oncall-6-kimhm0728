@@ -19,6 +19,6 @@ class InputConverter {
 
     fun convertWorkSort(input: String) =
         input.convertListWithComma().map { Worker(it) }.run {
-            WorkSort(this)
+            WorkSort(this.toMutableList())
         }
 }
