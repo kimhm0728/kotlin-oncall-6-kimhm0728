@@ -28,9 +28,9 @@ class OnCallInfo(private val month: Month, private val startDay: DayOfWeek) {
         }
     }
 
-    fun forEach(action: (Int, DayOfWeek) -> Unit) {
+    fun forEach(action: (Month, Int, DayOfWeek) -> Unit) {
         for (day in 1..month.day) {
-            action(day, getDayOfWeek(day))
+            action(month, day, getDayOfWeek(day))
         }
     }
 
