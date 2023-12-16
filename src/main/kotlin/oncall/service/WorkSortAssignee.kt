@@ -35,7 +35,7 @@ class WorkSortAssignee {
         if (!WorkHistory.isWorkYesterday(worker, day)) {
             return worker
         }
-        workSort.changeSort(day)
+        workSort.changeSort(idx)
         return workSort[idx]
     }
 

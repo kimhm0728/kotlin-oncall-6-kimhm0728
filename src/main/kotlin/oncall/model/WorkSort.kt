@@ -2,13 +2,15 @@ package oncall.model
 
 class WorkSort(private val workers: MutableList<Worker>) {
 
-    operator fun get(position: Int) = workers[position % workers.size]
+    operator fun get(position: Int) = workers[getPosition(position)]
 
     fun changeSort(position: Int) {
-        val tempWorker = workers[position % workers.size]
-        workers[position] = workers[position + 1]
-        workers[position + 1] = tempWorker
+        val tempWorker = workers[getPosition(position)]
+        workers[getPosition(position)] = workers[getPosition(position + 1)]
+        workers[getPosition(position + 1) % workers.size] = tempWorker
     }
+
+    private fun getPosition(position: Int) = position % workers.size
 
     fun validateWorkOnce(otherWorkSort: WorkSort) {
         validateSize(otherWorkSort)
