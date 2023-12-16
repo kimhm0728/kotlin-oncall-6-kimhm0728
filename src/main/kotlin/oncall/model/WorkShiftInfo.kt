@@ -12,9 +12,12 @@ class WorkShiftInfo(
 ) {
 
     override fun toString(): String {
-        if (DayClassifier.isWeekDay(dayOfWeek) && DayClassifier.isLegalHoliDay(month, day)) {
+        if (isWeekDayAndLegalHoliday()) {
             return "${month.title}월 ${day}일 ${dayOfWeek.title}(휴일) $worker"
         }
         return "${month.title}월 ${day}일 ${dayOfWeek.title} $worker"
     }
+
+    private fun isWeekDayAndLegalHoliday() =
+        DayClassifier.isWeekDay(dayOfWeek) && DayClassifier.isLegalHoliDay(month, day)
 }

@@ -15,16 +15,11 @@ class OnCallInfo(private val month: Month, private val startDay: DayOfWeek) {
     private fun initDayOfWeekStore() {
         enumValues<DayOfWeek>().forEach { day ->
             if (day.ordinal >= startDay.ordinal) {
-                dayOfWeekStore[day.ordinal- startDay.ordinal] = day
+                dayOfWeekStore[day.ordinal - startDay.ordinal] = day
+                return@forEach
             }
-        }
 
-        if (dayOfWeekStore.size == WEEK) return
-
-        enumValues<DayOfWeek>().forEach { day ->
-            if (day.ordinal < startDay.ordinal) {
-                dayOfWeekStore[WEEK - startDay.ordinal + day.ordinal] = day
-            }
+            dayOfWeekStore[WEEK - startDay.ordinal + day.ordinal] = day
         }
     }
 
