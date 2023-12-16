@@ -5,6 +5,11 @@ import oncall.model.WorkShiftStore
 class OutputView {
 
     fun printWorkShiftList(workShiftStore: WorkShiftStore) {
-        print(workShiftStore)
+        val stringBuilder = StringBuilder()
+        workShiftStore.store.forEach {
+            stringBuilder.append(it).append("\n")
+        }
+
+        print(stringBuilder)
     }
 }
