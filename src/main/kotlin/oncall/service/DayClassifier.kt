@@ -1,38 +1,26 @@
 package oncall.service
 
 import oncall.constants.DayOfWeek
+import oncall.constants.LegalHoliday
 import oncall.constants.Month
 
 object DayClassifier {
 
-    private val legalHoliDayStore = mutableMapOf<Month, Int>()
+    private val legalHolidayStore =
+        LegalHoliday.entries.associate { it.month to it.day }
 
-    init {
-        legalHoliDayStore[Month.JAN] = 1
-        legalHoliDayStore[Month.MAR] = 1
-        legalHoliDayStore[Month.MAY] = 5
-        legalHoliDayStore[Month.JUN] = 6
-        legalHoliDayStore[Month.AUG] = 15
-        legalHoliDayStore[Month.OCT] = 3
-        legalHoliDayStore[Month.OCT] = 9
-        legalHoliDayStore[Month.DEC] = 25
-    }
+    private val weekdayStore = setOf(
+        DayOfWeek.MON, DayOfWeek.TUE, DayOfWeek.WED, DayOfWeek.THU, DayOfWeek.FRI
+    )
 
-    fun isWeekday(dayOfWeek: DayOfWeek): Boolean {
-        if (dayOfWeek == DayOfWeek.MON) return true
-        if (dayOfWeek == DayOfWeek.TUE) return true
-        if (dayOfWeek == DayOfWeek.WED) return true
-        if (dayOfWeek == DayOfWeek.THU) return true
-        if (dayOfWeek == DayOfWeek.FRI) return true
-        return false
-    }
+    fun isWeekday(dayOfWeek: DayOfWeek) =
+        weekdayStore.contains(dayOfWeek)
 
     fun isLegalHoliday(month: Month, day: Int): Boolean {
-        val legalDay = legalHoliDayStore[month] ?: return false
-        if (legalDay == day) return true
-        return false
+        val legalDay = legalHolidayStore[month] ?: return false
+        return legalDay == day
     }
-
+git
     fun isHoliday(month: Month, day: Int, dayOfWeek: DayOfWeek) =
         isLegalHoliday(month, day) || !isWeekday(dayOfWeek)
 }
