@@ -6,7 +6,7 @@ import oncall.model.WorkShiftInfo
 import oncall.model.WorkShiftStore
 import oncall.model.WorkSort
 
-class WorkSortAssignee {
+object WorkSortAssignee {
 
     fun assign(
         onCallInfo: OnCallInfo,
