@@ -1,6 +1,6 @@
 package oncall.io.input
 
-import oncall.constants.Day
+import oncall.constants.DayOfWeek
 import oncall.constants.Month
 import oncall.model.OnCallInfo
 import oncall.model.WorkSort
@@ -12,9 +12,9 @@ class InputConverter {
     fun convertMonthAndStartDay(input: String): OnCallInfo {
         val monthAndStartDay = input.convertListWithComma()
         val month = Month.entries.first { it.title == monthAndStartDay[0] }
-        val day = Day.entries.first { it.title == monthAndStartDay[1] }
+        val dayOfWeek = DayOfWeek.entries.first { it.title == monthAndStartDay[1] }
 
-        return OnCallInfo(month, day)
+        return OnCallInfo(month, dayOfWeek)
     }
 
     fun convertWorkSort(input: String) =

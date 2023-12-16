@@ -1,6 +1,6 @@
 package oncall.io.input
 
-import oncall.constants.Day
+import oncall.constants.DayOfWeek
 import oncall.constants.Month
 import oncall.util.convertListWithComma
 
@@ -21,7 +21,7 @@ class InputValidator {
 
     private fun String.validateMonth() = require(Month.entries.any { it.title == this })
 
-    private fun String.validateStartDay() = require(Day.entries.any { it.title == this })
+    private fun String.validateStartDay() = require(DayOfWeek.entries.any { it.title == this })
 
     fun validateWorkSort(input: String) {
         input.validateEmpty()

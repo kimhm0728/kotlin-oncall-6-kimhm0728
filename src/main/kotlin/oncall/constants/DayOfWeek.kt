@@ -1,6 +1,6 @@
 package oncall.constants
 
-enum class Day(val title: String) {
+enum class DayOfWeek(val title: String) {
     SUN("일"),
     MON("월"),
     TUE("화"),

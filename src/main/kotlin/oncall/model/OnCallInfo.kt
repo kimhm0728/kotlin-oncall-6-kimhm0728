@@ -1,40 +1,41 @@
 package oncall.model
 
-import oncall.constants.Day
+import oncall.constants.DayOfWeek
 import oncall.constants.Month
 
 
-class OnCallInfo(private val month: Month, private val startDay: Day) {
+class OnCallInfo(private val month: Month, private val startDay: DayOfWeek) {
 
-    private val dayStore = mutableMapOf<Int, Day>()
+    private val dayOfWeekStore = mutableMapOf<Int, DayOfWeek>()
 
     init {
-        initDayStore()
+        initDayOfWeekStore()
     }
 
-    private fun initDayStore() {
-        enumValues<Day>().forEach { day ->
+    private fun initDayOfWeekStore() {
+        enumValues<DayOfWeek>().forEach { day ->
             if (day.ordinal >= startDay.ordinal) {
-                dayStore[day.ordinal- startDay.ordinal] = day
+                dayOfWeekStore[day.ordinal- startDay.ordinal] = day
             }
         }
 
-        if (dayStore.size == WEEK) return
+        if (dayOfWeekStore.size == WEEK) return
 
-        enumValues<Day>().forEach { day ->
+        enumValues<DayOfWeek>().forEach { day ->
             if (day.ordinal < startDay.ordinal) {
-                dayStore[WEEK - startDay.ordinal + day.ordinal] = day
+                dayOfWeekStore[WEEK - startDay.ordinal + day.ordinal] = day
             }
         }
     }
 
-    fun forEach(action: (Int, Day) -> Unit) {
+    fun forEach(action: (Int, DayOfWeek) -> Unit) {
         for (day in 1..month.day) {
-            action(day, getDay(day))
+            action(day, getDayOfWeek(day))
         }
     }
 
-    private fun getDay(day: Int) = dayStore[(day -  1) % WEEK]!!
+    private fun getDayOfWeek(day: Int) =
+        dayOfWeekStore[(day -  1) % WEEK]!!
 
     companion object {
         private const val WEEK = 7
