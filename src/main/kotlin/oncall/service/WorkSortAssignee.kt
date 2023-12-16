@@ -12,12 +12,12 @@ class WorkSortAssignee {
     fun assign(
         onCallInfo: OnCallInfo,
         weekDayWorkSort: WorkSort,
-        holiDayWorkSort: WorkSort
+        holidayWorkSort: WorkSort
     ): WorkShiftStore {
 
         onCallInfo.forEach { month, day, dayOfWeek ->
             if (DayClassifier.isHoliday(month, day, dayOfWeek)) {
-                val worker = getWorker(holiDayWorkSort, holidayWorkSortIdx, day)
+                val worker = getWorker(holidayWorkSort, holidayWorkSortIdx, day)
                 val workShiftInfo = WorkShiftInfo(month, day, dayOfWeek, worker)
                 applyHolidayWork(worker, day, workShiftInfo)
                 return@forEach
