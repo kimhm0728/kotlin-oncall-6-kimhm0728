@@ -1,5 +1,6 @@
 package oncall.service
 
+import oncall.constants.DayOfWeek
 import oncall.constants.Month
 import oncall.model.OnCallInfo
 import oncall.model.WorkShiftInfo
@@ -19,10 +20,7 @@ object WorkSortAssignee {
         val workShiftStore = mutableListOf<WorkShiftInfo>()
 
         onCallInfo.forEach { month, day, dayOfWeek ->
-            if (DayClassifier.isHoliDay(dayOfWeek) ||
-                DayClassifier.isLegalHoliDay(month, day)
-            ) {
-
+            if (DayClassifier.isHoliday(month, day, dayOfWeek)) {
                 val worker = holiDayWorkSort[holiDayWorkSortIdx++]
                 workShiftStore.add(WorkShiftInfo(month, day, dayOfWeek, worker))
                 return@forEach

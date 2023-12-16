@@ -27,12 +27,14 @@ object DayClassifier {
         return false
     }
 
-    fun isHoliDay(dayOfWeek: DayOfWeek) =
-        !isWeekDay(dayOfWeek)
+    private fun isWeekend(dayOfWeek: DayOfWeek) = !isWeekDay(dayOfWeek)
 
-    fun isLegalHoliDay(month: Month, day: Int): Boolean {
+    private fun isLegalHoliDay(month: Month, day: Int): Boolean {
         val legalDay = legalHoliDayStore[month] ?: return false
         if (legalDay == day) return true
         return false
     }
+
+    fun isHoliday(month: Month, day: Int, dayOfWeek: DayOfWeek) =
+        isLegalHoliDay(month, day) || isWeekend(dayOfWeek)
 }
