@@ -20,7 +20,7 @@ object DayClassifier {
         val legalDay = legalHolidayStore[month] ?: return false
         return legalDay == day
     }
-git
+
     fun isHoliday(month: Month, day: Int, dayOfWeek: DayOfWeek) =
         isLegalHoliday(month, day) || !isWeekday(dayOfWeek)
 }
